@@ -7,6 +7,7 @@ import PhotoGrid from './components/PhotoGrid'
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
+
   const { photos, nextPage, loading, error } = state
 
   const fetchPhotos = useCallback(async () => {
@@ -23,7 +24,6 @@ export default function App() {
   useEffect(() => {
     fetchPhotos()
   }, [])
-
 
   // We'll show an error only if the first page fails to load
   if (photos.length === 0) {
@@ -44,7 +44,7 @@ export default function App() {
     }
   }
 
-  return <PhotoGrid numColumns={3} photos={photos} />
+  return <PhotoGrid numColumns={3} photos={photos} onEndReached={fetchPhotos} />
 }
 
 const styles = StyleSheet.create({
@@ -54,4 +54,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})
